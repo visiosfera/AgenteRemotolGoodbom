@@ -1,3 +1,4 @@
+using AgenteRemotoGoodbom;
 using AgenteRemotoGoodbom.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<ConsoleCommandService>();
 
 var app = builder.Build();
 
@@ -23,5 +26,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapHub<MonitorHub>("/hubs/monitor");
 
 app.Run();
